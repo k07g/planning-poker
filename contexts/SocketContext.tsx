@@ -25,7 +25,8 @@ export function SocketProvider({ children }: { children: ReactNode }) {
   const [myId, setMyId] = useState<string | undefined>(undefined)
 
   useEffect(() => {
-    const socket = io()
+    const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL
+    const socket = socketUrl ? io(socketUrl) : io()
     socketRef.current = socket
 
     socket.on('connect', () => {

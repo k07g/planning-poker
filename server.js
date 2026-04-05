@@ -21,7 +21,12 @@ app.prepare().then(() => {
     handle(req, res, parsedUrl)
   })
 
-  const io = new Server(httpServer)
+  const io = new Server(httpServer, {
+    cors: {
+      origin: process.env.CORS_ORIGIN || '*',
+      methods: ['GET', 'POST'],
+    },
+  })
 
   io.on('connection', (socket) => {
     socket.on('create-room', ({ playerName }, callback) => {
